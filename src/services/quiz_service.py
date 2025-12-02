@@ -1,4 +1,3 @@
-####
 from src.services.db_service import db
 from src.models import Question, Choice, Quiz, Quiz_Question, Elo, User, Review_Deck, Teacher_Quiz
 
@@ -170,48 +169,6 @@ def get_quiz_info(quiz_id):
 
     return out
 
-
-# def get_quiz_info_slidedeck(quiz_id):
-#     quiz = db.session.get(Quiz, quiz_id)
-
-#     if not quiz:
-#         return None
-
-#     #return questions and choices
-
-#     questions = db.session.execute(db.select(Question).filter_by(quiz_id=quiz_id).order_by(Review_Deck.pos, Review_Deck.question_id)).scalars().all()
-
-#     out = {"id": quiz.id, "title": quiz.title, "questions": []}
-
-#     # tracks the num of questions so frontend can use it
-#     numOfQ = 0
-
-#     #i is of type quiz question
-#     for i in questions:
-#         # type question
-#         question = db.session.get(Question, i.question_id)
-
-#         if not question:
-#             continue
-
-#         correctChoiceText = db.session.execute(db.text("SELECT q.id, c.id, c.is_correct, q.question, c.choice_text FROM question q JOIN choice c on q.id = c.question_id WHERE q.id = :question_id AND c.is_correct = true"), {"question_id": question.id}).mappings().fetchone()
-
-#         # same thing as numOfQ but for choices
-#         numOfC = 0
-
-#         out["questions"].append({
-#             "id": question.id,
-#             "question": question.question,
-#             "difficulty": question.difficulty,
-#             "choice": correctChoiceText,
-#             "numOfC": numOfC
-#         })
-
-#         numOfQ += 1
-
-#     out["numOfQ"] = numOfQ
-
-#     return out
 
 def get_quiz_info_slidedeck(quiz_id):
     quiz = db.session.get(Quiz, quiz_id)

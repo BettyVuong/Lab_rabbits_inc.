@@ -1,6 +1,4 @@
 from flask import Blueprint, render_template, url_for, redirect
-# from quiz_routes import quiz_page
-#from src.models.user import User
 from src.services.db_service import db
 
 dashboard_bp = Blueprint('dashboard', __name__)

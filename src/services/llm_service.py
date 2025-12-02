@@ -2,7 +2,6 @@ import math
 from sklearn.cluster import KMeans
 from sqlalchemy import func
 from src.services.db_service import db
-#from src.models import Elo, User
 
 
 def expected_prob(Rs, Rq, scale=400.0):

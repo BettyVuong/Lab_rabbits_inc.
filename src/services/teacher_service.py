@@ -1,4 +1,3 @@
-###
 from src.services.db_service import db
 from src.models import Question, Choice, Quiz, Quiz_Question, Elo, User, Review_Deck, TeacherStudent, Teacher
 
