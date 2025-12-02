@@ -58,22 +58,3 @@ def average_student(user_id):
     return largest, (Beginner+Intermediate+Advanced+Expert)
 
 
-# def quizAccess(unit):
-#     user_id = 1
-#     studentElo = db.session.execute(db.text("SELECT rating FROM elo WHERE user_id = :id AND unit = :unit"), {"id": user_id, "unit": unit}).mappings().fetchone()
-#     studentElo = studentElo["rating"]
-
-#     canAccess = [True, False, False]
-        
-#     if studentElo >= 980 and studentElo < 1080:
-#         canAccess[1] = True
-    
-#     if studentElo >= 1080:
-#         canAccess[1] = True
-#         canAccess[2] = True
-
-#     return canAccess
-
-# def go_to_quiz(user_id,quiz_id):
-#     return redirect(url_for('quiz_bp.quiz_page', quiz_id=quiz_id))
-
