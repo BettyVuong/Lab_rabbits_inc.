@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{% if quiz %}{{ quiz.title }}{% else %}Quiz{% endif %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='../static/css/quiz_final.css') }}"
+    />
+  </head>
+  <body class="quiz-page">
+    {% if quiz %}
+    <header class="quiz-topbar">
+      <form
+        id="exit-quiz-form"
+        action="{{ url_for('quiz_page.exit_quiz', user_id=user_id) }}"
+        method="POST"
+        style="display: inline"
+      >
+        <button
+          type="button"
+          id="exit-quiz-btn"
+          class="btn btn-secondary quiz-exit-btn"
+        >
+          Exit Quiz
+        </button>
+      </form>
+    </header>
+    <div class="quiz-container">
+      <aside class="quiz-tracker" aria-label="Questions tracker">
+        <button
+          type="button"
+          id="logo-home-btn"
+          style="background: none; border: none; padding: 0; cursor: pointer"
+        >
+          <img
+            src="{{ url_for('static', filename='images/logo2.png') }}"
+            alt="Lab Rabbits Inc."
+            class="quiz-logo"
+          />
+        </button>
+        <h2>Questions</h2>
+        <ol class="tracker-list">
+          {% for question in quiz.questions %}
+          <li>
+            <button
+              type="button"
+              class="tracker-btn"
+              data-target="{{ loop.index0 }}"
+              aria-label="Go to question {{ loop.index }}"
+            >
+              {{ loop.index }}
+            </button>
+          </li>
+          {% endfor %}
+        </ol>
+      </aside>
+
+      <main class="quiz-main">
+        <header class="quiz-header">
+          <h1>{{ quiz.title }}</h1>
+          <p class="quiz-meta">
+            Question <span id="current-question">1</span> of {{ quiz.numOfQ or
+            quiz.questions|length }}
+          </p>
+        </header>
+
+        {% if quiz.questions %}
+        <form
+          id="quiz-form"
+          method="POST"
+          action="{{ url_for('quiz_page.submit_quiz', quiz_id=quiz.id, user_id=user_id) }}"
+        >
+          <div class="question-wrapper">
+            {% for question in quiz.questions %}
+            <section
+              class="quiz-question"
+              data-index="{{ loop.index0 }}"
+              data-question-id="{{ question.id }}"
+              {%
+              if
+              not
+              loop.first
+              %}hidden{%
+              endif
+              %}
+              aria-hidden="{{ 'false' if loop.first else 'true' }}"
+            >
+              <h2>Question {{ loop.index }}</h2>
+              <p class="prompt">{{ question.question }}</p>
+
+              {% if question.choices.text %}
+              <ul class="options">
+                {% for option in question.choices.text %}
+                <li>
+                  <label>
+                    <input
+                      type="radio"
+                      name="question_{{ question.id }}"
+                      value="{{ option }}"
+                    />
+                    <span>{{ option }}</span>
+                  </label>
+                </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p class="no-options">No answers available for this question.</p>
+              {% endif %}
+            </section>
+            {% endfor %}
+          </div>
+
+          <div class="quiz-controls">
+            <button type="button" id="prev-btn" class="btn" disabled>
+              Previous
+            </button>
+            <button type="button" id="next-btn" class="btn btn-primary">
+              Next
+            </button>
+          </div>
+        </form>
+        {% else %}
+        <p class="quiz-empty">No questions found for this quiz.</p>
+        {% endif %}
+      </main>
+    </div>
+    {% else %}
+    <div class="quiz-empty">
+      <h1>Quiz not found</h1>
+      <p>
+        We couldn’t find the quiz you were looking for.
+        <a href="{{ url_for('main.dashboard') }}">Return to the dashboard</a>.
+      </p>
+    </div>
+    {% endif %}
+
+    <!-- Exit Confirmation Modal -->
+    <div class="quiz-exit-modal" id="exit-confirm-modal" aria-hidden="true">
+      <div
+        class="quiz-exit-modal-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="exit-modal-title"
+      >
+        <button class="quiz-exit-modal-close" aria-label="Close">×</button>
+        <h3 id="exit-modal-title">Exit Quiz?</h3>
+        <div id="exit-modal-body">
+          <p class="exit-confirm-text">
+            Are you sure you want to exit? Your progress will be lost.
+          </p>
+        </div>
+        <div class="exit-modal-actions">
+          <button type="button" id="exit-cancel-btn" class="btn btn-secondary">
+            Cancel
+          </button>
+          <button type="button" id="exit-confirm-btn" class="btn btn-primary">
+            Exit Quiz
+          </button>
+        </div>
+      </div>
+      <div class="quiz-exit-modal-backdrop"></div>
+    </div>
+
+    <script>
+      // Pass user_id to JavaScript
+      window.QUIZ_USER_ID = {{ user_id|default(1)|tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/quiz.js') }}" defer></script>
+  </body>
+</html>

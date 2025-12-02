@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+    <title>Landing Page</title>
+</head>
+
+<body class="login-body">
+    <div class="login-header">
+            <img src="../static/images/logo2.png" alt="Group Logo" class="logo">
+            <img src="../static/images/labrabbitname.PNG" alt="Group Logo" class="login-title">
+    </div>
+    <div class="login-box">
+        <h1>Welcome to Lab Rabbits Inc.!</h1>
+        <div class="login-options">
+            <div class="student-option">
+                <h2>Student</h2>
+                <form action="{{ url_for('auth.login') }}" method="get">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <form action="{{ url_for('auth.register') }}" method="get">
+                    <button type="submit" class="btn btn-secondary">Sign Up</button>
+                </form>
+            </div>
+            <div class="teacher-option">
+                <h2>Teacher</h2>
+                <form action="{{ url_for('auth.teacher_login') }}" method="get">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <form action="{{ url_for('auth.teacher_register') }}" method="get">
+                    <button type="submit" class="btn btn-secondary">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+<footer>
+    <div class="login-footer">
+        <footer class = "lfooter">
+            <p>Copyright Lab Rabbits Incorporated 2025</p>
+        </footer>
+    </div>
+</footer>
+
+</html>

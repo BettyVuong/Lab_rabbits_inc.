@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Statistics</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+</head>
+<body class="results-body">
+    <div class="results-box">
+        <div class="centred">
+            <h1>Student Statistics</h1>
+        </div>
+        <hr>
+        
+        {% if class_stats %}
+            {% for student in class_stats %}
+                <div class="question-block">
+                    <div class="student-header">
+                        <div class="student-avatar-section">
+                            <img
+                                src="{{ url_for('static', filename='images/' ~ student.img) }}"
+                                alt="{{ student.name }}'s profile picture"
+                                class="student-avatar"
+                            />
+                        </div>
+                        <div class="student-title-section">
+                            <h2 class="student-name-title">{{ student.name }}</h2>
+                            <span class="cluster-badge cluster-{{ student.cluster_label|lower|replace(' ', '-') }}">
+                                {{ student.cluster_label }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {% if student.stats %}
+                        <div class="stats-section">
+                            {% for stat in student.stats %}
+                                <div class="stat-row">
+                                    <span class="stat-unit-label"><b>Unit: </b>{{ stat.unit }}</span>
+                                    <span class="stat-rating-value stat-{{ stat.rating|lower|replace(' ', '-')|replace('at-', '') }}">
+                                        <b>Rating: </b>{{ stat.rating }}
+                                    </span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="no-stats-text">No statistics available yet</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="rtextbox">
+                <h2>No students enrolled in your class yet.</h2>
+            </div>
+        {% endif %}
+
+        <hr>
+        <br>
+        <a href="{{ url_for('teacher_dashboard.teacher_dashboard', user_id=teacher_id) }}" class="rbuttons">
+            <h2>Back to Dashboard</h2>
+        </a>
+    </div>
+</body>
+</html>

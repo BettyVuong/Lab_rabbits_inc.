@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Last Attempt Results</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+    <link rel="icon" type="image/png" href="../static/images/logo3.png" />
+  </head>
+  <body class="results-body">
+    <div class="results-box">
+      <div class="centred">
+        <h1>Quiz Results</h1>
+      </div>
+      <hr />
+      <!-- <p><strong>Total Questions:</strong> {{ quiz.numOfQ }}</p>
+        <p><strong>User ID:</strong> {{ user_id }}</p> -->
+      <!-- <div class="inner-result-box"> -->
+      <!-- <div class ="rtextbox">
+                <h2>User ID: {{ user_id }}</h2>
+            </div> -->
+      <!-- <hr> -->
+
+      <div class="rtextbox">
+        <h2>Total Questions: {{quiz.numOfQ}}</h2>
+      </div>
+
+      <div class="rtextbox">
+        <h2>Score: {{quiz.grade}}%</h2>
+      </div>
+      <!-- </div> -->
+
+      <hr />
+
+      <h2>Your Answers:</h2>
+      {% if user_answers %} {% for q in user_answers %}
+      <div class="question-block">
+        <p class="question-title"><b>Question: </b>{{ q.qText }}</p>
+        <p class="user-answer"><b>Your answer: </b>{{ q.answer }}</p>
+        <p class="user-answer"><b>Correct answer: </b>{{ q.correctAnswer }}</p>
+      </div>
+      {% endfor %} {% else %}
+
+      <p>No answers submitted.</p>
+      {% endif %}
+
+      <hr />
+      <br />
+      <a
+        href="{{url_for('dashboard.dashboard', user_id = user_id)}}"
+        class="rbuttons"
+      >
+        <h2>Continue</h2>
+      </a>
+
+      <!-- <div class="centred">
+            <img src="logo2.png" alt="Group Logo" class="alt-logo">
+        </div> -->
+    </div>
+  </body>
+</html>
+

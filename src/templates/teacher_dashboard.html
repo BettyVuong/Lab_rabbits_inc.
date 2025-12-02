@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+</head>
+<body class="body-dashboard">
+    <div class = "header">
+        <img src="../static/images/logo2.png" alt="Group Logo" class="logo">
+        <!-- Replace this with the image for the group name -->
+        <!-- <h1>Lab Rabbits Inc.</h1>  -->
+        <img src="../static/images/labrabbitname.PNG" alt="Group Logo" class="title">
+        
+
+    </div>
+
+    <div class="sidebar">
+        <div class = "picon-border">   
+            <!-- {{ user.profile_pic }} user this later -->
+            <img
+            src="{{ url_for('static', filename='images/' ~ user.avatar) }}"
+            alt="Your profile icon"
+            class="picon"
+            />
+        </div>
+        <div class ="ptextbox">
+            <h2>{{ user.username }}</h2>
+        </div>
+       
+       
+       
+        <a href="{{ url_for('profile.profile_teacher', user_id=user.id) }}" class="pbuttons">
+            <h2 alt="Edit Profile">Edit Profile</h2>
+        </a>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+         <a href="{{url_for('main.home', user_id = user_id)}}">
+            <img
+            src="../static/images/sign_out_white.png"
+            alt="Sign Out"
+            class="signout"
+            />
+        </a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages-container">
+          {% for category, message in messages %}
+            <div class="flash-message flash-{{ category }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="teacher-display">
+        <div class="teacher-sub-box">
+            <h1>
+                Class
+            </h1>
+            <hr>
+            <div class="quick-display"> 
+                {#
+                <h4>Students: {{ class.count }}</h4>
+                <h4>Performance: {{ class.avg }}</h4>
+                #}
+            </div>
+            <br>
+            <br>
+            <div class="quick-display">
+                <div class = "quick-display-box">
+                    <h2>Student Stats</h2>
+                   <a href="{{ url_for('teacher.stats', user_id=user.id) }}" class="add-button">
+                        <span class="button-text">View</span>
+                    </a>
+                    <p>
+                        View info on the perfomance of all students
+                    </p>
+                    
+
+                </div>
+                <div class = "quick-display-box">
+                    <h2>Add Student</h2>
+                    
+                    <form id="add-student-form" method="post" onsubmit="return handleAddStudent(event)">
+                        <label for="email">Student Email:</label>
+                        <input type="email" id="email" name="email" required>
+
+                        <button type="submit">
+                            <span >Register Student</span>
+                        </button>
+                    </form>
+                    <p>
+                        Add students to your class using their email
+                    </p>
+                    
+                </div>
+            </div>
+            <!-- <div class ="pbuttons">
+                <h2>Student Stats</h2>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <div class ="pbuttons">
+                <h2>Add Student</h2>
+            </div> -->
+           
+
+
+        </div>
+
+        <div class="teacher-sub-box">
+            <h1>
+                Quizzes
+            </h1>
+            
+            <hr>
+            <br>
+            <a href="{{ url_for('teacher.save_quiz', teacher_id=user.id) }}" class="pbuttons">
+                <h2 alt="Create Quiz">Create Quiz</h2>
+            </a>
+            <br>
+            {#
+            {% for quiz in quizzes %}
+            <section class="t-shelf">
+                <h2>{{ quiz.unit }}</h2>
+                <div class="t-shelf-container">
+                    {% if quiz.accessList[0] %}
+                        <a class="t-item" href="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}">
+                            <b>Quiz 1</b>
+                        </a>
+                    {% else %}
+                        <div class="t-item" data-locked="true">Quiz 1</div>
+                    {% endif %}
+                </div>
+            </section>
+            {% endfor %}
+            #}
+
+            <section class="t-shelf">
+            <h2>Your Quizzes</h2>
+                <div class="t-shelf-container">
+                    {% if quizzes %}
+                        {% for quiz in quizzes %}
+                            <div
+                                class="t-item"
+                                data-modal="true"
+                                data-quiz-id="{{ quiz.id }}"
+                                data-teacher-id="{{ user_id }}"
+                                data-quiz-name="{{ quiz.title }}"
+                                data-quiz-description="Demo this quiz to see how it appears to students."
+                            >
+                                <b>{{ quiz.title }}</b>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: white; padding: 20px;">No quizzes created yet. Create your first quiz above!</p>
+                    {% endif %}
+                </div>
+            </section>
+            
+
+          
+
+        </div>
+    </div>
+    
+    <div class="modal" id="modal" aria-hidden="true">
+      <div
+        class="modal_dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <button class="modal_close" aria-label="Close">x</button>
+        <h3 id="modal-title"></h3>
+        <div id="modal-body"></div>
+        <div id="modal-difficulty">
+          <label for="difficulty-select">Difficulty:</label>
+          <select id="difficulty-select">
+            <option value="900">Easy</option>
+            <option value="1000" selected>Medium</option>
+            <option value="1100">Hard</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <form
+            id="delete-quiz-form"
+            action=""
+            method="POST"
+            style="display: inline;"
+          >
+            <button
+              type="submit"
+              id="modal-delete"
+              class="btn btn-danger"
+            >
+              Delete Quiz
+            </button>
+          </form>
+          <button
+            id="modal-start"
+            class="modal_start btn btn-primary"
+            aria-labelledby="modal-title"
+          >
+            Demo Quiz
+          </button>
+        </div>
+      </div>
+      <div class="modal_backdrop"></div>
+    </div>
+
+    <script>
+      //pass user_id to js
+      window.DASHBOARD_USER_ID = {{ user_id|default(1)|tojson }};
+      
+      //auto-dismiss flash messages after 5 seconds
+      document.addEventListener('DOMContentLoaded', function() {
+        const flashMessages = document.querySelectorAll('.flash-message');
+        flashMessages.forEach(function(message) {
+          setTimeout(function() {
+            message.classList.add('fade-out');
+            setTimeout(function() {
+              message.remove();
+              //remove container if empty
+              const container = document.querySelector('.flash-messages-container');
+              if (container && container.children.length === 0) {
+                container.remove();
+              }
+            }, 300);
+          }, 5000);
+        });
+        
+        //handles add student form submission
+        window.handleAddStudent = function(e) {
+          e.preventDefault();
+          const emailInput = document.getElementById('email');
+          const email = emailInput.value;
+          const teacherId = window.DASHBOARD_USER_ID;
+          if (email && teacherId) {
+            //create and submit a POST form
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = `/add_student/${encodeURIComponent(email)}/${teacherId}`;
+            document.body.appendChild(form);
+            form.submit();
+          }
+          return false;
+        };
+      });
+    </script>
+    <script src="{{ url_for('static', filename='js/teacher_dashboard.js') }}"></script>
+</body>
+</html>

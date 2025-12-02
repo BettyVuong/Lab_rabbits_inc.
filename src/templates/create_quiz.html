@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_quiz.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo3.png') }}">
+</head>
+<body class="login-body">
+    <div class="login-header">
+      <img src="../static/images/logo2.png" alt="Group Logo" class="logo" />
+      <img
+        src="../static/images/labrabbitname.PNG"
+        alt="Group Logo"
+        class="login-title"
+      />
+    </div>
+
+<div class="login-box profile-container quiz-wrapper">
+    <div class="page-intro">
+        <a href="{{ url_for('teacher_dashboard.teacher_dashboard', user_id=teacher_id) }}" class="btn-back">← Back to Dashboard</a>
+        <h1>Create Quiz</h1>
+        <p>Enter the first answer option as the correct answer.</p>
+    </div>
+
+    <form action="{{ url_for('teacher.save_quiz', teacher_id=teacher_id) }}" method="POST">
+
+        <!-- quiz title and difficulty inline -->
+        <div class="section-inline">
+            <div class="section-item">
+                <label for="title">Enter Quiz Title</label>
+                <input type="text" id="title" name="title" class="full-width-input" required>
+            </div>
+
+            <div class="section-item">
+                <label for="difficulty">Overall Quiz Difficulty</label>
+                <select id="difficulty" name="difficulty" required>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- questions container -->
+
+        <div class="section">
+
+            <div id="questions-container">
+                <!-- Questions 1-10 shown by default -->
+            </div>
+        </div>
+
+        <!-- buttons -->
+        <div class="button-row">
+
+            <button type="button" id="add-question" class="btn btn-secondary">+ Add New Question</button>
+            <input type="submit" value="Save Quiz" class="btn btn-primary">
+
+        </div>
+
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/create_quiz.js') }}"></script>
+
+</body>
+</html>

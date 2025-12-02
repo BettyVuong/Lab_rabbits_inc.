@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css" />
+    <title>Dashboard</title>
+    <link rel="icon" type="image/png" href="../static/images/logo3.png" />
+  </head>
+  <body class="body-dashboard">
+    <div class="header">
+      <img src="../static/images/logo2.png" alt="Group Logo" class="logo" />
+      <!-- Replace this with the image for the group name -->
+      <!-- <h1>Lab Rabbits Inc.</h1>  -->
+      <img
+        src="../static/images/labrabbitname.PNG"
+        alt="Group Logo"
+        class="title"
+      />
+    </div>
+    <!-- <div class="header-bottom"></div> -->
+
+    <div class="sidebar">
+      <div class="picon-border">
+        <!-- {{ user.profile_pic }} user this later -->
+        <img
+          src="{{ url_for('static', filename='images/' ~ user.avatar) }}"
+          alt="Your profile icon"
+          class="picon"
+        />
+      </div>
+      <div class="ptextbox">
+        <h2 alt="Username">{{ user.username }}</h2>
+      </div>
+      <div class="ptextbox">
+        <h2 alt="Grade">Grade: {{ user.grade }}</h2>
+      </div>
+      <div class="ptextbox" style="padding-bottom: 20px;">
+        <h2 alt="Teachers">Teachers</h2>
+        {% if teacherList %}
+          {% for teacher in teacherList %}
+            <p class="teacher-text">{{ teacher }}</p>
+          {% endfor %}
+        {% else %}
+          <p class="teacher-text">No teachers assigned</p>
+        {% endif %}
+      </div>
+      <a href="{{ url_for('profile.profile_student', user_id=user.id) }}" class="pbuttons">
+        <h2 alt="Edit Profile">Edit Profile</h2>
+      </a>
+      <a href="{{url_for('main.home', user_id = user_id)}}"
+        ><img
+          src="../static/images/sign_out_white.png"
+          alt="Sign Out"
+          class="signout"
+      /></a>
+    </div>
+
+    <section class="shelf">
+      <h2>Unit Review</h2>
+      <div class="shelf-container">
+        {% for quiz in quizzes %}
+          <a
+            class="item"
+            href="{{ url_for('review_page.review_page', quiz_id=quiz.id, user_id=user_id) }}"
+            ><b>{{ quiz.unit }} Review</b></a
+          >
+        {% endfor %}
+      </div>
+    </section>
+
+    {% for quiz in quizzes %}
+    <section class="shelf">
+      <h2>{{ quiz.unit }}</h2>
+      <div class="shelf-container">
+        <!-- Teacher-created quizzes: Show only one quiz card -->
+        {% if quiz.teacher_id %}
+          {% if quiz.accessList[0] %}
+            <a
+              class="item"
+              href="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-modal="true"
+              data-quiz-id="{{ quiz.id }}"
+              data-user-id="{{ user_id }}"
+              data-quiz-name="{{ quiz.title }}"
+              data-quiz-description="Take this quiz assigned by your teacher."
+              data-quiz-url="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-locked="false"
+              ><b>{{ quiz.title }}</b></a
+            >
+          {% else %}
+            <div class="item" data-locked="true">
+              {{ quiz.title }}
+            </div>
+          {% endif %}
+        {% else %}
+          <!-- Regular quizzes: Show Quiz 1, 2, 3 -->
+          <!-- Quiz 1 -->
+          {% if quiz.accessList[0] %}
+            <a
+              class="item"
+              href="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-modal="true"
+              data-quiz-id="{{ quiz.id }}"
+              data-user-id="{{ user_id }}"
+              data-quiz-name="{{ quiz.title }} 1"
+              data-quiz-description="Take the first quiz to see how well you understand the unit."
+              data-quiz-url="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-locked="false"
+              ><b>Quiz 1</b></a
+            >
+          {% else %}
+            <div class="item" data-locked="true">
+              Quiz 1
+            </div>
+          {% endif %}
+
+          <!-- Quiz 2 -->
+          {% if quiz.accessList[1] %}
+            <a
+              class="item"
+              href="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-modal="true"
+              data-quiz-id="{{ quiz.id }}"
+              data-user-id="{{ user_id }}"
+              data-quiz-name="{{ quiz.title }} 2"
+              data-quiz-description="Try the second quiz."
+              data-quiz-url="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-locked="false"
+              ><b>Quiz 2</b></a
+            >
+          {% else %}
+            <div class="item" data-locked="true">
+              Quiz 2
+            </div>
+          {% endif %}
+
+          <!-- Quiz 3 -->
+          {% if quiz.accessList[2] %}
+            <a
+              class="item"
+              href="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-modal="true"
+              data-quiz-id="{{ quiz.id }}"
+              data-user-id="{{ user_id }}"
+              data-quiz-name="{{ quiz.title }} 3"
+              data-quiz-description="Try the third quiz."
+              data-quiz-url="{{ url_for('quiz_page.quiz_page', quiz_id=quiz.id, user_id=user_id) }}"
+              data-locked="false"
+              ><b>Quiz 3</b></a
+            >
+          {% else %}
+            <div class="item" data-locked="true">
+              Quiz 3
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+    </section>
+    {% endfor %}
+
+    <div class="modal" id="modal" aria-hidden="true">
+      <div
+        class="modal_dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <button class="modal_close" aria-label="Close">x</button>
+        <h3 id="modal-title"></h3>
+        <div id="modal-body"></div>
+        <div class="modal-actions">
+          <button
+            id="modal-last-attempt"
+            class="btn btn-secondary"
+            style="display: none;"
+          >
+            Last Attempt
+          </button>
+          <button
+            id="modal-start"
+            class="modal_start btn btn-primary"
+            aria-labelledby="modal-title"
+          >
+            Start Quiz
+          </button>
+        </div>
+      </div>
+      <div class="modal_backdrop"></div>
+    </div>
+
+    <script>
+      //pass user_id to js
+      window.DASHBOARD_USER_ID = {{ user_id|default(1)|tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='js/student_dashboard.js') }}"></script>
+  </body>
+</html>

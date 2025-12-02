@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+    <title>Student Sign Up</title>
+</head>
+<body class="login-body">
+    <div class="login-header">
+        <img src="../static/images/logo2.png" alt="Group Logo" class="logo">
+        <img src="../static/images/labrabbitname.PNG" alt="Group Logo" class="login-title">
+    </div>
+    <div class="login-box">
+        <h1>Student Sign Up</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('auth.register') }}" method="POST" class="login-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password_a1">Password:</label>
+            <input type="password" id="password_a1" name="password_a1" required>
+
+            <label for="password_a2">Confirm Password:</label>
+            <input type="password" id="password_a2" name="password_a2" required>
+
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+
+        <div class="form-actions">
+            <form action="{{ url_for('auth.login') }}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </form>
+            <form action="{{ url_for('main.home') }}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="login-footer">
+            <footer class="lfooter">
+                <p>Copyright Lab Rabbits Incorporated 2025</p>
+            </footer>
+        </div>
+    </footer>
+</body>
+</html>

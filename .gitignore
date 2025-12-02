@@ -1,0 +1,19 @@
+src/__pycache__/__init__.cpython-313.pyc
+src/__pycache__
+# __init__.cpython-313.pyc
+# auth_routes.cpython-313.pyc
+# main_routes.cpython-313.pyc
+src/routes/__pycache__
+src/routes/__pycache__/__init__.cpython-313.pyc
+src/routes/__pycache__/auth_routes.cpython-313.pyc
+src/routes/__pycache__/main_routes.cpython-313.pyc
+src/models/__pycache__
+
+venv/
+.env
+migrations/versions/__pycache__/env.cpython-313.pyc
+migrations/versions/__pycache__/env.cpython-312.pyc
+migrations/versions/__pycache__
+*.pyo
+*.pyd
+*.pyc

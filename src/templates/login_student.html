@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+    <title>Student Login</title>
+</head>
+<body class="login-body">
+    <div class="login-header">
+        <img src="../static/images/logo2.png" alt="Group Logo" class="logo">
+        <img src="../static/images/labrabbitname.PNG" alt="Group Logo" class="login-title">
+    </div>
+    <div class="login-box">
+        <h1>Student Login</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash-messages">
+              <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('auth.login') }}" method="POST" class="login-form">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <div class="form-actions">
+            <form action="{{ url_for('auth.register') }}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">Sign Up</button>
+            </form>
+            <form action="{{ url_for('main.home') }}" method="get" style="display: inline;">
+                <button type="submit" class="btn btn-secondary">Back</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="login-footer">
+            <footer class="lfooter">
+                <p>Copyright Lab Rabbits Incorporated 2025</p>
+            </footer>
+        </div>
+    </footer>
+</body>
+</html>

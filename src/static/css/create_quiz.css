@@ -1,0 +1,308 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* Header and body styles are now handled by dashboard.css */
+
+.logo {
+    height: 200px;
+    width: auto;
+}
+
+.title {
+    height: 5vw;
+    width: auto;
+}
+
+.quiz-wrapper {
+    max-width: 900px;
+    width: 80%;
+    margin: 40px auto;
+    position: relative;
+}
+
+.page-intro {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.btn-back {
+    position: absolute;
+    left: -220px;
+    top: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #F9F7F0;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 3px solid #000000;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: "Josefin Sans", sans-serif;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-back:hover {
+    background-color: #E8E6D8;
+    transform: scale(1.05);
+}
+
+.btn-back:active {
+    background-color: #F4E04D;
+    transform: scale(1.05);
+}
+
+.btn-back:hover {
+    background: #D8D6C8;
+    transform: scale(1.05);
+}
+
+.page-intro h1 {
+    margin-bottom: 10px;
+    color: white;
+    font-size: 2rem;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.page-intro p {
+    margin: 0;
+    font-size: 1rem;
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.section {
+    margin-top: 25px;
+}
+
+.section-inline {
+    display: flex;
+    gap: 20px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.section-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+label {
+    font-weight: 600;
+    color: white;
+    display: block;
+    margin-bottom: 8px;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+input[type="text"] {
+    padding: 10px 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Josefin Sans", sans-serif;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+input[type="text"]::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+select {
+    padding: 10px 14px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: "Josefin Sans", sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    transition: border-color 0.2s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+select option {
+    color: #000000;
+    background: #ffffff;
+}
+
+.full-width-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.question-block {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    background: rgba(249, 247, 240, 0.2);
+}
+
+.question-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.question-header {
+    font-weight: 600;
+    color: white;
+    font-size: 1.1rem;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.btn-delete-question {
+    padding: 8px 16px;
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: "Josefin Sans", sans-serif;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.btn-delete-question:hover {
+    background: #c82333;
+    transform: scale(1.05);
+}
+
+.question-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.question-row .question-text {
+    flex: 3;
+    min-width: 200px;
+}
+
+.question-row .question-diff {
+    flex: 1.2;
+    min-width: 120px;
+}
+
+.answers-label {
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: white;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.answers-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.answers-row input[type="text"] {
+    flex: 1;
+    min-width: 150px;
+}
+
+.button-row {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    font-family: "Josefin Sans", sans-serif;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #F9F7F0;
+    color: #000000;
+    border: 3px solid #000000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #E8E6D8;
+    transform: scale(1.05);
+}
+
+.btn-primary:active:not(:disabled) {
+    background-color: #F4E04D;
+    transform: scale(1.05);
+}
+
+.btn-secondary {
+    background-color: #F9F7F0;
+    color: #000000;
+    border: 3px solid #000000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: #E8E6D8;
+    transform: scale(1.05);
+}
+
+.btn-secondary:active:not(:disabled) {
+    background-color: #F4E04D;
+    transform: scale(1.05);
+}
+
+#add-question {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .quiz-wrapper {
+        margin: 20px;
+        padding: 24px;
+    }
+    
+    .question-row {
+        flex-direction: column;
+    }
+    
+    .question-row .question-text,
+    .question-row .question-diff {
+        flex: 1;
+        width: 100%;
+    }
+    
+    .button-row {
+        flex-direction: column;
+    }
+    
+    #add-question,
+    input[type="submit"] {
+        width: 100%;
+    }
+}

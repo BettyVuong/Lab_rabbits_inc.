@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/dashboard.css') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="{{ url_for('static', filename='images/logo3.png') }}"
+    />
+    <title>Review</title>
+  </head>
+  <body class="review-page">
+    <header class="review-topbar">
+      <form
+        action="{{ url_for('review_page.exit_review', user_id=user_id) }}"
+        method="POST"
+        class="review-exit-form"
+      >
+        <button type="submit" class="btn btn-secondary review-home-btn">
+          Exit Review
+        </button>
+      </form>
+    </header>
+
+    <div class="review-container">
+      <aside class="review-tracker" aria-label="Review tracker">
+        <a href="{{ url_for('dashboard.dashboard', user_id=user.id) }}">
+          <img
+            src="{{ url_for('static', filename='images/logo2.png') }}"
+            alt="Lab Rabbits Inc."
+            class="review-logo"
+          />
+        </a>
+        <h2>Cards</h2>
+        {% if review.questions %}
+        <ol class="review-tracker-list">
+          {% for q in review.questions %}
+          <li>
+            <button
+              type="button"
+              class="review-tracker-btn"
+              data-target="{{ loop.index0 }}"
+              aria-label="Go to card {{ loop.index }}"
+            >
+              {{ loop.index }}
+            </button>
+          </li>
+          {% endfor %}
+        </ol>
+        {% else %}
+        <p class="review-empty">No cards available</p>
+        {% endif %}
+      </aside>
+
+      <main class="review-main">
+        <header class="review-header">
+          <h1>{{ unit_name }} Review</h1>
+          {% if review.questions %}
+          <p class="review-meta">
+            Card <span id="review-current">1</span> of {{
+            review.questions|length }}
+          </p>
+          {% endif %}
+        </header>
+
+        {% if review.questions %}
+        <div class="review-wrapper">
+          {% for q in review.questions %}
+          <section
+            class="review-card"
+            data-index="{{ loop.index0 }}"
+            {%
+            if
+            not
+            loop.first
+            %}hidden{%
+            endif
+            %}
+            aria-hidden="{{ 'false' if loop.first else 'true' }}"
+          >
+            <h2>Question {{ loop.index }}</h2>
+            <p class="review-prompt">{{ q.question }}</p>
+            <div class="review-answer">
+              <button type="button" class="btn reveal-btn">
+                Reveal Answer
+              </button>
+              <div class="answer-text" data-visible="false">
+                <p>{{ q.choice }}</p>
+              </div>
+            </div>
+          </section>
+          {% endfor %}
+        </div>
+
+        <div class="review-controls">
+          <button type="button" id="review-prev" class="btn" disabled>
+            Previous
+          </button>
+          <button type="button" id="review-next" class="btn btn-primary">
+            Next
+          </button>
+        </div>
+        {% else %}
+        <p class="review-empty">No questions available for review.</p>
+        {% endif %}
+      </main>
+    </div>
+
+    <script
+      src="{{ url_for('static', filename='js/review.js') }}"
+      defer
+    ></script>
+  </body>
+</html>

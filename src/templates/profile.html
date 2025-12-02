@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../static/css/dashboard.css">
+    <link rel="icon" type="image/png" href="../static/images/logo3.png">
+    <title>{{ profile_type|capitalize }} Profile</title>
+</head>
+<body class="login-body">
+    <div class="login-header">
+        <img src="../static/images/logo2.png" alt="Group Logo" class="logo">
+        <img src="../static/images/labrabbitname.PNG" alt="Group Logo" class="login-title">
+    </div>
+    <div class="login-box profile-container">
+
+    <h1>{{ profile_type|capitalize }} Profile</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages flash-success">
+          <ul>
+            {% for category, message in messages %}
+              {% if category != 'error' %}
+                <li>{{ message }}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{% if profile_type == 'student' %}{{ url_for('profile.profile_student', user_id=user_id) }}{% else %}{{ url_for('profile.profile_teacher', user_id=user_id) }}{% endif %}">
+
+        <!--current avatar circle -->
+
+        <div class="avatar-main-wrapper">
+
+            <div class="avatar-main">
+
+                <img src="{{ url_for('static', filename='images/' ~ current_avatar) }}"
+                     alt="Current avatar">
+            </div>
+        </div>
+
+        <!-- name and edit button -->
+        <div class="profile-name-section">
+            <label for="name" class="profile-label">Name</label>
+            <div class="profile-name-wrapper">
+                <input type="text" id="name" name="name" value="{{ name }}" required class="profile-name-input">
+                <button type="button" class="btn btn-secondary" id="editNameBtn">Edit</button>
+            </div>
+        </div>
+
+        <!-- avatar choices -->
+        <div class="profile-avatar-section">
+            <h2 class="profile-avatar-title">Choose an avatar</h2>
+            <div class="profile-avatar-grid">
+
+            {% for avatar in avatar_list %}
+            <label class="avatar-option">
+                <input type="radio" name="avatar" value="{{ avatar }}"
+                       {% if avatar == current_avatar %}checked{% endif %}>
+                <img src="{{ url_for('static', filename='images/' ~ avatar) }}"
+                     alt="Avatar option">
+            </label>
+            {% endfor %}
+        </div>
+
+        <!-- save and back buttons -->
+        <div class="profile-actions">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="{% if profile_type == 'student' %}{{ url_for('dashboard.dashboard', user_id=user_id) }}{% else %}{{ url_for('teacher_dashboard.teacher_dashboard', user_id=user_id) }}{% endif %}" class="btn btn-secondary">Back</a>
+        </div>
+
+    </form>
+    </div>
+    
+    <script>
+
+        // start with name locked and allow editing when edit button is clicked
+        const editBtn = document.getElementById('editNameBtn');
+        const nameInput = document.getElementById('name');
+        const profileForm = document.querySelector('form');
+
+        if (editBtn && nameInput) {
+
+            nameInput.disabled = true;
+
+            editBtn.addEventListener('click', function () {
+
+                nameInput.disabled = false;
+                nameInput.focus();
+                nameInput.select();
+
+            });
+
+            // Ensure name field is enabled before form submission
+            if (profileForm) {
+                profileForm.addEventListener('submit', function () {
+                    nameInput.disabled = false;
+                });
+            }
+        }
+    </script>
+    
+</body>
+
+<footer>
+    <div class="login-footer">
+        <footer class="lfooter">
+            <p>Copyright Lab Rabbits Incorporated 2025</p>
+        </footer>
+    </div>
+</footer>
+
+</html>
