@@ -7,8 +7,6 @@ app = create_app()
 # Uncomment the following lines if you want to create the database tables
 # with app.app_context():
 #     db.create_all()  # Create database tables for our data models
-RAILWAY_URL = os.environ.get("RAILWAY_URL", "https://your-app-name.up.railway.app")
-print("App is running at:", RAILWAY_URL)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
