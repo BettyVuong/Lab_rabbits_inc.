@@ -6,7 +6,8 @@ from src.services.db_service import init_database
 from src import models
 
 def create_app():
-    load_dotenv()  # Load environment variables from a .env file
+    if os.environ.get("RAILWAY_ENV") != "1":
+        load_dotenv()  # Load environment variables from a .env file
 
     app = Flask(__name__)
 
