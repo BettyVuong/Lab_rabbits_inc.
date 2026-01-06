@@ -1,36 +1,30 @@
 from flask import Flask
-#add later for db
 #from flask_sqlalchemy import SQLAlchemy
 from dotenv import load_dotenv
 import os
 from src.services.db_service import init_database
 from src import models
-#db = SQLAlchemy()
 
 def create_app():
     load_dotenv()  # Load environment variables from a .env file
 
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
+
+
+    database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        raise RuntimeError("DATABASE_URL is not set")
 
     # load configuration
     #app.config.from_myobject('src.config.Config')
     #app.config.from_pyfile('config.py', silent=True)
     app.config.from_mapping(
         SECRET_KEY=os.getenv("SECRET_KEY", "dev"),
-        #SQLALCHEMY_DATABASE_URI=os.getenv("DATABASE_URL"),
-        #SQLALCHEMY_TRACK_MODIFICATIONS=False
+        SQLALCHEMY_DATABASE_URI=database_url,
+        SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
 
-    #add later for db
-    #db.init_app(app)
     init_database(app)
-
-    #with app.app_context():
-    #    db.create_all()  # Create database tables for our data models
-
-    # Import and register blueprints here
-    #from src.routes.auth_routes import auth_bp
-    #app.register_blueprint(auth_bp)
 
     # Register blueprints
     from src.routes.auth_routes import auth_bp
