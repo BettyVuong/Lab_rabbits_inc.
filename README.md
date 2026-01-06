@@ -9,8 +9,10 @@ Requirements
 ## Setup
 To run the program create a venv using ```python3 -m venv venv``` in CLI and then activate the venv using ```source venv/bin/activate``` for mac or ```venv\Scripts\activate``` in CLI. Install the dependency in CLI ```pip install -r requirements.txt```
 Afterwards, ensure to create a .env file with the following template, be sure that the file is located on the outermost file structure where files such as "venv" or "README.md" are.
-```FLASK_APP = src:create_app 
+```
+FLASK_APP = src:create_app 
 FLASK_DEBUG =1
 SECRET_KEY = <insert key>
-DATABASE_URL = <your local postgres connection string>```
+DATABASE_URL = <your local postgres connection string>
+```
 You should be able to run the program now, in the venv CLI use ```python3 app.py```, the http link for the local host should appear, paste the link into a web browser and you should be able to test the demo.
