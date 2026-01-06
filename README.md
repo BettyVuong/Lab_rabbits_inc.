@@ -3,9 +3,9 @@ A full-stack intelligent tutoring web application intended to support teachers a
 
 ## Local Development
 Requirements
-Python 3.12
-pip
-virtualenv
+- Python 3.12
+- pip
+- virtualenv
 ## Setup
 To run the program create a venv using ```python3 -m venv venv``` in CLI and then activate the venv using ```source venv/bin/activate``` for mac or ```venv\Scripts\activate``` in CLI. Install the dependency in CLI ```pip install -r requirements.txt```
 Afterwards, ensure to create a .env file with the following template, be sure that the file is located on the outermost file structure where files such as "venv" or "README.md" are.
